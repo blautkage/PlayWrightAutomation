@@ -68,7 +68,6 @@ test.only('Playwright Special Locators', async ({ page }) => {
     //Step 7 — Verify booking in bookings page
     await page.locator('#nav-bookings').click();
     await expect(page).toHaveURL('https://eventhub.rahulshettyacademy.com/bookings');
-    const bookingRef =
     await expect (page.locator('#booking-card')).filter({ hasText: eventName }).toBeVisible();
 
     
