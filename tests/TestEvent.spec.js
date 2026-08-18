@@ -47,6 +47,9 @@ test.only('Playwright Special Locators', async ({ page }) => {
     await expect(page.locator('div').filter({ hasText: 'FestivalFeaturedDilli Diwali' }).nth(1)).toBeVisible();
     await page.locator('#event-card').filter({ hasText: eventName }).click();
     await expect(page.getByRole('heading', { name: eventName })).toBeVisible({ timeout: 5_000 });
+    const eventCard = page.locator('#event-card').filter({ hasText: eventName });
+    const seatLocator = eventCard.locator('text=/seat/i');
+    await expect(seatLocator).toHaveText(/50/);
 
     //Step 4 — Start booking
     await page.locator(`#event-card`).filter({ hasText: eventName }).getByTestId('book-now-btn').click();
@@ -64,18 +67,21 @@ test.only('Playwright Special Locators', async ({ page }) => {
     //Step 6 — Verify booking confirmation
     await expect(page.getByRole('heading', { name: 'Booking Confirmed! 🎉' })).toBeVisible();
     await expect(page.locator(".booking-ref.font-mono.font-bold.text-indigo-600").first()).toBeVisible();
+    const bookingRef =  await page.locator(".booking-ref.font-mono.font-bold.text-indigo-600").textContent();
+    console.log(bookingRef);
 
     //Step 7 — Verify booking in bookings page
     await page.locator('#nav-bookings').click();
     await expect(page).toHaveURL('https://eventhub.rahulshettyacademy.com/bookings');
-    await expect (page.locator('#booking-card')).filter({ hasText: eventName }).toBeVisible();
-
-    
+    await expect(page.getByTestId('booking-card').first()).toBeVisible();
+    await expect(page.locator('#booking-card').filter({ hasText: bookingRef }).first()).toBeVisible();
+    await expect(page.locator('#booking-card').filter({ hasText: bookingRef }).filter({ hasText: eventName }).first()).toBeVisible();
+        
     //Step 8 — Verify seat reduction
     await page.locator('#nav-events').click();
-    await page.locator('#event-card').filter(eventName).nth(1).toBeVisible();
-    await page.locator(eventName).click();
-    await expect(page.getByRole('heading', { name: eventName })).toBeVisible({ timeout: 5_000 });
-    await expect(page.getByText('49', { exact: true })).toBeVisible();
+    await expect(page.locator('#event-card').filter({ hasText: eventName })).toBeVisible();
+    await expect(eventCard).toBeVisible();
+    await expect(page.getByRole('heading', { name: eventName })).toBeVisible();
+    await expect(seatLocator).toHaveText(/49/);
 
 })
