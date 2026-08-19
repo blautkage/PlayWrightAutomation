@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.only('Playwright Special Locators', async ({ page }) => {
+test('Test Event Booking', async ({ page }) => {
     
     const email = "da9lco@gmail.com";
     const password = "Pudding1!";
