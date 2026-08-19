@@ -67,7 +67,7 @@ import { time } from 'node:console';
    
 })
 
-test.only('Test 2 — Group ticket booking is NOT eligible for refund', async ({ page }) => {
+test('Test 2 — Group ticket booking is NOT eligible for refund', async ({ page }) => {
 
     //Step 1 — Login
     await loginAndGoToBooking(page);
