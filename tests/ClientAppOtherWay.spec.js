@@ -5,7 +5,7 @@ const { text } = require('node:stream/consumers');
 
 
 
-test('@webst Client App Login', async ({page}) =>{
+test.only('@webst Client App Login', async ({page}) =>{
     
     const email = "da9lco@gmail.com";
     const productName = 'ZARA COAT 3';

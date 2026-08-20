@@ -14,6 +14,7 @@ import { time } from 'node:console';
         await expect(page.getByRole('link', { name: 'Browse Events →' })).toBeVisible();
     }
 
+    // Validate first characters of booking ref and event title match
     async function validateFirstCharactersMatch(page, bookingSelector) {
     // 1. Read booking ref from the page
     const bookingRefText = await page.locator('span.font-mono.font-bold.text-indigo-600.bg-indigo-50.px-3.py-1.rounded-lg.text-sm').textContent();
